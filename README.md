@@ -22,3 +22,6 @@ $ make run-coverage
 ## External libraries used
 * [Catch2](https://github.com/catchorg/Catch2) for tests
 
+## TODO
+* Only the parser itself is tested
+
