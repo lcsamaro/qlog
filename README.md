@@ -11,8 +11,12 @@ Currently uses fgetc for file reading, but could easily be changed to some other
 
 ## Tests
 ```
-$ make test
-$ ./test
+$ make run-tests
+```
+
+## Code coverage
+```
+$ make run-coverage
 ```
 
 ## External libraries used
