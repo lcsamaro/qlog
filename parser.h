@@ -20,6 +20,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#ifndef QLOG_PARSER_H
+#define QLOG_PARSER_H
+
 #include <functional>
 
 /* Parse a quake log
@@ -30,4 +33,6 @@
  */
 void parse_quake_log(std::function<int()> next,
 		std::function<void(const char*, const char*)> cb);
+
+#endif /* QLOG_PARSER_H */
 
