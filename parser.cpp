@@ -40,7 +40,7 @@
 #define EVENT_SZ_MAX (64)
 #define TEXT_SZ_MAX  (1024)
 
-int parse_quake_log(std::function<int()> next,
+void parse_quake_log(std::function<int()> next,
 		std::function<void(const char*, const char*)> cb) {
 	for (;;) {
 		char event[EVENT_SZ_MAX] = {0};

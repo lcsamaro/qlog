@@ -27,10 +27,7 @@
  * Parameters:
  *   next: function that returns next character 
  *   cb:   callback to be called when events 
- *
- * Returns:
- *   number of malformed lines
  */
-int parse_quake_log(std::function<int()> next,
+void parse_quake_log(std::function<int()> next,
 		std::function<void(const char*, const char*)> cb);
 
