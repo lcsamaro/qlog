@@ -59,7 +59,7 @@ void parse_quake_log(std::function<int()> next,
 
 		i = 0;
 		while (ch != ':' && ch != EOF) {
-			if (i < EVENT_SZ_MAX-1) { // event type too big, skip
+			if (i < EVENT_SZ_MAX-1) { // big events are truncated
 				event[i++] = ch;
 			}
 			ch = next();

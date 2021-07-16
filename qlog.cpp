@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
 	/* file reader */
 	FILE *f = fopen(argv[1], "rb");
 	if (!f) {
-		fprintf(stderr, "failed to parse %s\n", argv[1]);
+		fprintf(stderr, "failed to open %s\n", argv[1]);
 		return 1;
 	}
 
