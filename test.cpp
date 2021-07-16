@@ -60,6 +60,15 @@ TEST_CASE( "Parser ignores hyphenetade lines", "[parser]" ) {
 	REQUIRE( r.size() == 0 );
 }
 
+TEST_CASE( "Pareser correctly ignores some lines", "[parser]" ) {
+	auto r = parse_string(
+		"20:37 InitGame: abc\n"
+		" 20:37 ----------------\n"
+		"20:37 InitGame: abc"
+		);
+	REQUIRE( r.size() == 2 );
+}
+
 TEST_CASE( "Parser ignores malformed lines", "[parser]" ) {
 	auto r = parse_string("hello world\n\r\r\n\n");
 	REQUIRE( r.size() == 0 );
