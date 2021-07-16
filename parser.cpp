@@ -97,6 +97,4 @@ void parse_quake_log(std::function<int()> next,
 
 		if (ch == EOF) break;
 	}
-
-	return false;
 }
