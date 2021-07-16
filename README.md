@@ -1,19 +1,17 @@
-# qlog
+# qlog - quake log parser
+This program parses a quake server log file and outputs human-readable matches data in yaml format.
 
-Quake log parser
+Currently uses fgetc for file reading, but could easily be changed to some other alternatives. Nice comparison of some approaches: https://nothings.org/computer/lexing.html.
 
 ## Building
-```
-$ make
-```
+`$ make`
 
 ## Running
-```
-$ ./qlog qgames.log
-```
+`$ ./qlog qgames.log`
 
 ## Tests
-```
-$ make test
-```
+`$ make test`
+
+## External libraries used
+* [Catch2](https://github.com/catchorg/Catch2) for tests
 
