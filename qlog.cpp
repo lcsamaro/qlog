@@ -77,10 +77,6 @@ int main(int argc, char **argv) {
 			} else {
 				scores[killed]--;
 			}
-
-			/*printf("killer:_%s_\n", killer.c_str());
-			printf("killed:_%s_\n", killed.c_str());
-			printf("death cause:_%s_\n", mean.c_str());*/
 		} else if (!strcmp(event, "InitGame")) {
 			kills = 0;
 			scores.clear();
