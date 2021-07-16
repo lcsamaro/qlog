@@ -26,90 +26,7 @@
 #include <string>
 #include <unordered_map>
 
-/* using C like code for the parser, although std::function is used for callbacks */
-#define next() (fgetc(f))
-#define skip_spaces() do { \
-		ch = ' '; \
-		while (ch == ' ') ch = next(); \
-		if (ch == EOF) break; /* eof, line ended without all information*/ \
-	} while (0)
-#define skip_line() do { \
-		while (ch != '\n' && ch != EOF) ch = next(); \
-		if (ch == EOF) break; \
-	} while (0)
-#define skip_until_space() do { \
-		while (ch != ' ' && ch != EOF) ch = next(); \
-		if (ch == EOF) break; /* eof, line ended without all information */ \
-	} while (0)
-
-#define EVENT_SZ_MAX (64)
-#define TEXT_SZ_MAX  (1024)
-
-bool parse_quake_log(const char *filename,
-		std::function<void(const char*, const char*)> cb) {
-	FILE *f = fopen(filename, "rb");
-	if (!f) return true; // error
-
-	for (;;) {
-		char event[EVENT_SZ_MAX] = {0};
-		char text[TEXT_SZ_MAX] = {0};
-		int ch, i;
-
-		skip_spaces();
-		skip_until_space(); // skip time
-		skip_spaces();
-
-		// get event
-		if (ch == '-') {
-			skip_line();
-			continue;
-		}
-
-		i = 0;
-		while (ch != ':' && ch != EOF) {
-			if (i < EVENT_SZ_MAX-1) { // event type too big, skip
-				event[i++] = ch;
-			}
-			ch = next();
-		}
-		if (ch == EOF) break; // eof, line ended without all information
-		ch = next(); // skip colon
-
-		if (!strcmp(event, "InitGame") || !strcmp(event, "ShutdownGame")) {
-			cb(event, "");
-		}
-
-		if (ch == EOF) break; // eof, line ended without all information
-
-		if (strcmp(event, "Kill")) { // only interested in kill events, skip
-			skip_line();
-			continue;
-		}
-
-		// parse kill event
-		while (ch != ':' && ch != EOF) {
-			ch = next();
-		}
-		if (ch == EOF) break; // eof, line ended without all information
-		ch = next(); // skip colon
-
-		skip_spaces();
-
-		// read log
-		i = 0;
-		while (ch != '\n' && ch != EOF) {
-			if (i < TEXT_SZ_MAX-1 && ch != '\r') text[i++] = ch;
-			ch = next();
-		}
-		cb(event, text);
-
-		if (ch == EOF) break;
-	}
-
-	fclose(f);
-
-	return false;
-}
+#include "parser.h"
 
 int main(int argc, char **argv) {
 	if (argc != 2) {
@@ -117,6 +34,18 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 
+	/* file reader */
+	FILE *f = fopen(argv[1], "rb");
+	if (!f) {
+		fprintf(stderr, "failed to parse %s\n", argv[1]);
+		return 1;
+	}
+
+	auto reader = [f] () {
+		return fgetc(f);
+	};
+
+	/* aggregate output */
 	unsigned current_game = 0;
 	unsigned kills = 0;
 	std::unordered_map<std::string, int> scores;
@@ -176,10 +105,9 @@ int main(int argc, char **argv) {
 		}
 	};
 
-	if (parse_quake_log(argv[1], event_cb)) {
-		fprintf(stderr, "failed to parse %s\n", argv[1]);
-		return 1;
-	}
+	parse_quake_log(reader, event_cb);
+
+	fclose(f);
 
 	return 0;
 }
