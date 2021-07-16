@@ -7,8 +7,8 @@ test: test.cpp parser.cpp
 test-coverage:
 	g++ -Wall -std=c++11 -O0 -fprofile-arcs -ftest-coverage test.cpp parser.cpp -o test-coverage
 
-.PHONY: run-tests
-run-tests: test
+.PHONY: run-test
+run-test: test
 	./test
 
 .PHONY: run-coverage
