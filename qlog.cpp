@@ -63,15 +63,12 @@ int main(int argc, char **argv) {
 			auto mean = s.substr(p+1);
 
 			// get killer/killed
-			s = s.substr(0, p-2);
+			s = s.substr(0, p-3);
 			p = s.find(" killed"); // not very good, but no other option
 			if (p == std::string::npos) return;
 
 			auto killer = s.substr(0, p);
 			auto killed = s.substr(p + 8);
-			if (killed.size() && killed.back() == ' ') {
-				killed = killed.substr(0, killed.size()-1);
-			}
 
 			kills++;
 			kills_by_means[mean]++;
