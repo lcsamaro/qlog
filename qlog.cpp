@@ -69,6 +69,9 @@ int main(int argc, char **argv) {
 
 			auto killer = s.substr(0, p);
 			auto killed = s.substr(p + 8);
+			if (killed.size() && killed.back() == ' ') {
+				killed = killed.substr(0, killed.size()-1);
+			}
 
 			kills++;
 			kills_by_means[mean]++;
