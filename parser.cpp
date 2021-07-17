@@ -28,15 +28,15 @@
 #define skip_spaces() do { \
 		ch = ' '; \
 		while (ch == ' ') ch = next(); \
-		if (ch == EOF) break; /* eof, line ended without all information*/ \
+		if (ch == EOF) return; /* eof, line ended without all information*/ \
 	} while (0)
 #define skip_line() do { \
 		while (ch != '\n' && ch != EOF) ch = next(); \
-		if (ch == EOF) break; \
+		if (ch == EOF) return; \
 	} while (0)
 #define skip_until_space() do { \
 		while (ch != ' ' && ch != EOF) ch = next(); \
-		if (ch == EOF) break; /* eof, line ended without all information */ \
+		if (ch == EOF) return; /* eof, line ended without all information */ \
 	} while (0)
 
 #define EVENT_SZ_MAX (64)
