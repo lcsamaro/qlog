@@ -22,6 +22,8 @@
  */
 #include "parser.h"
 
+#include <cstring>
+
 /* using C like code for the parser, although std::function is used for callbacks */
 #define skip_spaces() do { \
 		ch = ' '; \
