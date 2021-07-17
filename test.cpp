@@ -55,6 +55,11 @@ std::vector<result> parse_string(std::string s) {
 	return v;
 }
 
+TEST_CASE( "Parser works correctly on empty inputs", "[parser]" ) {
+	auto r = parse_string("");
+	REQUIRE( r.size() == 0 );
+}
+
 TEST_CASE( "Parser ignores hyphenetade lines", "[parser]" ) {
 	auto r = parse_string(" 20:37 ----------------");
 	REQUIRE( r.size() == 0 );
